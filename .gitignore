@@ -112,7 +112,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-Readme.md
 
 # Spyder project settings
 .spyderproject
