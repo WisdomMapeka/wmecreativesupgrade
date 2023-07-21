@@ -1,0 +1,178 @@
+<!-- comment section start --------------------->
+<section class="comment-section-container">
+    <div class="row">
+        <div class="col-lg-9">
+            <div>Leave a Comment Below&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!-- TO BE UNCOMMENTED WHEN THE VIEWS DN NUM OF COMMNETS IS FIXED -->
+                <!--<span><i class="far fa-handshake"></i>&nbsp;&nbsp;100</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                <span><i class="far fa-eye"></i>&nbsp;&nbsp;{{blog.num_views}}</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                <span><i class="far fa-comment-alt"></i>&nbsp;&nbsp;200</span> -->
+            </div>
+
+            <div class="section-devide-line"></div>
+            <form class="comment-form" onsubmit="myform(event, this)">
+                {% csrf_token %}
+                <label for="name">Name</label><br>
+                <input id="name" type="text" name="Name"><br><br>
+
+                <label for="comment">Comment</label><br>
+                <textarea id="comment" name="comment"></textarea><br><br>
+
+                <input type="hidden" id="blog-id" name="blog-id" value="{{post.id}}"><br>
+
+                <button id="comment-submit-button" type="submit" name="comment" >Post Comment</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3">
+            <!-- second col with nothing -->
+        </div>
+    </div>
+</section>
+
+
+<section class="comment-display-section-container cotainer"><!-- comment display section -->
+    <div class="row">
+        <div class="col-lg-9" id="all-article-comments">
+            <div class="top-line"></div>
+            <!-- <div>sort by <span>latest</span><span>old</span></div> -->
+            {% for comment in post.comments_set.all %}
+            <div class="comment-box"> <!--Comment -->
+                    {{comment.comment}}
+                    <div class="comment-owner-meta-details row justify-content-between">
+                            <div class="col" >
+                                    <span >by: <b> {{comment.name}}</b></span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    <span >{{comment.date_created}}</span>
+                            </div>
+
+                            <div class="col" style="text-align: right;">
+                                <!-- <span>reply</span> -->
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    <span  style="cursor: pointer;" onclick="(like_dislike_comment('like', {{comment.id}}));">
+                                        <i class="far fa-thumbs-up"></i>&nbsp;
+                                    </span>
+                                    <span id="comment-{{comment.id}}-like">{{comment.likes}}</span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    <span  style="cursor: pointer;" onclick="(like_dislike_comment('dislike', {{comment.id}}));">
+                                        <i class="far fa-thumbs-down"></i>&nbsp;
+                                    </span>
+                                    <span id="comment-{{comment.id}}-dislike">{{comment.dislikes}}</span>
+                            </div>  
+                    </div>
+                    
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="col-lg-3">
+            <!-- second col with nothing -->
+        </div>
+    </div>
+</section>
+<!-- comment section end -------------------->
+
+<script>
+function myform(event){
+    event.preventDefault();
+
+    
+}
+
+
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+const btn = document.getElementById('comment-submit-button');
+
+
+
+
+function loadDoc( data ) {
+     const XHR = new XMLHttpRequest();
+     let urlEncodedData = "", urlEncodedDataPairs = [], name;
+
+ // Turn the data object into an array of URL-encoded key/value pairs.
+   for( name in data ) {
+        urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+      }
+       // Combine the pairs into a single string and replace all %-encoded spaces to
+  // the '+' character; matches the behavior of browser form submissions.
+       urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+// Define what happens on successful data submission
+       XHR.addEventListener( 'load', function(event) {
+      // alert( 'Yeah! Data sent and response loaded.' );
+      
+      const obj = JSON.parse(this.responseText);
+      console.log(obj);
+
+      let el = "";
+          el += obj['comment'];
+          el += '<div class="comment-owner-meta-details row justify-content-between">';
+          el += '<div class="col" >';
+          el += ' <span >by: <b>' + obj['name'] + '</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+          el += '<span >' + obj['date_created'] + '</span>';
+          el += '</div>';
+          el += '<div class="col" style="text-align: right;">';
+          el += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+          el += '<span  style="cursor: pointer;" onclick="(like_dislike_comment("like", {{comment.id}}));">';
+          el += '<i class="far fa-thumbs-up"></i>&nbsp;</span>'
+          el += '<span id="comment-{{comment.id}}-like">{{comment.likes}}0</span>';
+          el += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+          el += '<span style="cursor: pointer;" onclick="(like_dislike_comment("dislike", {{comment.id}}));">';
+          el += '<i class="far fa-thumbs-down"></i>&nbsp;</span>';
+          el += '<span id="comment-{{comment.id}}-dislike">{{comment.dislikes}}0</span>';
+          el += '</div>';
+          el += '</div>';   
+
+      let parentElement = document.getElementById("all-article-comments");
+      let comment_box =  document.createElement("div");
+          comment_box.className = "comment-box";
+          comment_box.innerHTML = el;
+          parentElement.insertBefore(comment_box, parentElement.children[1]);
+
+
+      
+     } );
+// Define what happens in case of error
+       XHR.addEventListener( 'error', function(event) {
+      alert( 'Oops! Something went wrong.' );
+      } );
+       XHR.open( 'POST', "{% url 'save_comment' %}" );
+         // Add the required HTTP header for form data POST requests
+    XHR.setRequestHeader('X-CSRFToken', csrftoken);
+  XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+
+  // Finally, send our data.
+  XHR.send( urlEncodedData );
+
+}
+
+
+btn.addEventListener( 'click', function() {
+        const comment_owner_name = document.getElementById('name').value;
+    const comment = document.getElementById('comment').value;
+    const blog_id = document.getElementById('blog-id').value;
+    const comment_details_array = {name:comment_owner_name, actual_comment:comment, blog_id:blog_id}
+    // console.log(comment_details_array);
+    loadDoc( comment_details_array  );
+} )
+// -------------------------------------------------------------------------------------------------------
+
+function like_dislike_comment(val, comment_id) {
+     const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    let objrespnse = JSON.parse(this.responseText);
+    let parentel = document.getElementById("comment-"+objrespnse['comment_id']+'-'+objrespnse['val']);
+    parentel.innerHTML = objrespnse['total_like_dislike'];
+    console.log(this.responseText);
+    }
+
+  var url = "/like_dislike_comment/"+val+"/" + comment_id +"/";
+  console.log(url);
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader('X-CSRFToken', csrftoken);
+  xhttp.send();
+}
+</script>

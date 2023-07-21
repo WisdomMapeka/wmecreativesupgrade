@@ -1,0 +1,50 @@
+{% if posts %}
+{% for post in posts %}
+<!-- It contains an article -->
+<article>
+
+    <div class="post-main-container theme-color-border">
+    <div class="article-image-title-summary">
+        <div class="bloglist-page-article-img">
+            <a href="{% url 'article' post.slug %}">
+            {% if post.lead_img %}
+                <img alt="{{post.lead_img_alt}}"  src="{{post.lead_img.url}}">
+            {% else %}
+            {% endif %}
+            </a>
+        </div>
+
+        <div class="bloglist-content-section">
+            <div>
+                <a href="{% url 'article' post.slug %}">
+                    {{post.title|safe}}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'article' post.slug %}">
+                {{post.summary|safe}}
+                </a>
+            </div>
+            <div class="post-tags">
+            {% for category in post.category.all %}
+            <a href="{% url 'article_list' category.name %}"><span>{{category}}</span></a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+            
+    <div class="post-date-author-update-bloglist">
+        <span><a href="{% url 'article' post.slug %}"><i class="fas fa-user"></i>&nbsp;&nbsp;by {{post.author}}</a></span>
+        <span><a href="{% url 'article' post.slug %}"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;{{post.date_created}}</a></span>
+        {% if post.date_updated %}
+        <span><a href="{% url 'article' post.slug %}"><i class="fas fa-pen-alt"></i>&nbsp;&nbsp;updated: {{post.date_updated}}</a></span>
+        {% else %}
+        {% endif %}
+        <!-- THIS FOLLOWING COMMENTED CODE IS NOT TO BE DELETED  -->
+        <!-- <span><a href="{% url 'article' post.slug %}"><i class="fas fa-comment-alt"></i>&nbsp;&nbsp;88</a></span>
+        <span><a href="{% url 'article' post.slug %}"><i class="far fa-eye"></i>&nbsp;&nbsp;100 views</a></span> -->
+    </div>
+    </div>
+</article>
+{% endfor %}
+{% endif %}

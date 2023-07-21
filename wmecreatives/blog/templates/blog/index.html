@@ -1,0 +1,23 @@
+{% load static %}
+{% include 'blog/template-parts/header.html' %}
+    <main class="main-content-container"><!-- main content container start------- -->
+      
+      <div class="main-column-one"><!-- column one starts------------------ -->
+        <h2>Recent Articles</h2>
+        {% include 'blog/template-parts/list-articles-template-part.html' %}
+      </div><!-- column one ends-------------------- -->
+      
+
+      
+      <div class="main-column-two"><!-- column two start------------------- -->
+          <!-- the aside content can also be nested within the main content -->
+          {% include 'blog/template-parts/sidebar.html' %}
+      </div><!-- column two ends------------------- -->
+      
+
+    </main><!-- main content container end------- -->
+
+    <!-- And here is our main footer that is used across all the pages of our website -->
+
+{% include 'blog/template-parts/footer.html' %}
+

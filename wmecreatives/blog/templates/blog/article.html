@@ -1,0 +1,54 @@
+{% include 'blog/template-parts/header.html' %}
+    <main class="main-content-container"><!-- main content container start------- -->
+      
+      <div class="main-column-one"><!-- column one starts------------------ -->
+        {% if post %}
+        <div class="blogdetails-topic">
+            <h1>
+              {{post.title}}
+            </h1>
+            <!-- 	{% if blog.author_image %}
+            <div  class="auther-pic">
+                <img src="{{blog.author_image.url}}" alt="">
+            </div>
+            {% else %}
+            <br>
+            {% endif %}	 -->
+            <div class="post-meta-data"> 
+                <div><i class="fas fa-user"></i>&nbsp;&nbsp;by: {{post.author}}</div>
+                <div><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;{{post.date_created}}</div>
+                {% if post.date_updated %}
+                <span><a href="{% url 'article' post.slug %}"><i class="fas fa-pen-alt"></i>&nbsp;&nbsp;updated: {{post.date_updated}}</a></span>
+                {% else %}
+                {% endif %}
+                <!-- TO BE UNCOMMENTED WHEN THE VIEWS DN NUM OF COMMNETS IS FIXED -->
+                <!-- <div><i class="fas fa-comment-alt"></i>&nbsp;&nbsp;200</div>
+                <div><i class="far fa-eye"></i>&nbsp;&nbsp;{{blog.num_views}}</div>	 -->
+            </div>
+        </div>
+        <!-- <div class="section-devide-line"></div> -->
+          
+        <div class="blogdetails-content"><!-- content of the article starts -->
+            {{post.content|safe}}
+        </div><!-- content of the article ends -->
+        {% endif %}
+
+        {% include 'blog/template-parts/comments.html' %}
+      </div><!-- column one ends-------------------- -->
+      
+
+      
+      <div class="main-column-two"><!-- column two start------------------- -->
+          <!-- the aside content can also be nested within the main content -->
+          {% include 'blog/template-parts/sidebar.html' %}
+      </div><!-- column two ends------------------- -->
+      
+
+    </main><!-- main content container end------- -->
+
+    
+
+
+
+
+{% include 'blog/template-parts/footer.html' %}
