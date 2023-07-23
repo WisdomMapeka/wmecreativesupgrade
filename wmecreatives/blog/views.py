@@ -14,29 +14,20 @@ from rest_framework.parsers import JSONParser
 
 # Create your views here.
 def index(request):
-    # for i in dir(request):
-    #     print(i)
-    print(request.scheme)
-    print(request.path_info)
-    print(request.path)
-    print(request.get_host, "GET HOST")
-    print(request.get_full_path_info)
-    print(request.get_full_path)
-    print(request.META['HTTP_HOST'])
     all_posts = Articles.objects.filter(article_status='publish')
-    categories = Categories.objects.all()
+    categories = Categories.objects.filter(is_series=False)
     return render(request, 'blog/index.html', {"posts":all_posts,
                                                "categories":categories})
 
 def article(request, slug):
-    categories = Categories.objects.all()
+    categories = Categories.objects.filter(is_series=False)
     post = Articles.objects.get(slug = slug, article_status='publish')
     return render(request, 'blog/article.html', {"post":post,
                                                  "categories":categories})
 
 
 def article_list(request, category):
-    categories = Categories.objects.all()
+    categories = Categories.objects.filter(is_series=False)
     try:
         category_id = Categories.objects.filter(name = category).first().id
     except AttributeError:

@@ -18,6 +18,7 @@ class AnalyticsCode(models.Model):
 
 class Categories(models.Model):
     name = models.CharField(null=True, blank=True, max_length=300, unique=True)
+    is_series = models.BooleanField(default=False)
     icon = models.ImageField(upload_to="media_files/Categories/icon", null=True, blank=True)
     icon_class = models.TextField(blank=True, null=True)
 
@@ -88,7 +89,7 @@ class Messages(models.Model):
         else:
             return "NO NAME"
 
-# api image model
+#THis model was created for an article about creating an image ap
 class Photos_collections(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True, default="api image")
     uploded = models.DateTimeField(auto_now_add=True)

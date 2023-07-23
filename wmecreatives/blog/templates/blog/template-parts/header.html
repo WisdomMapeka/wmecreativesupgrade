@@ -82,7 +82,8 @@
               </div>
               <div class="top-nav-menu" id="top-nav-menu-id">
                   <ul class="menu-items-container">
-                      <li class="menu-item"><a href="{% url 'index' %}">Home</a></li>
+                      <li class="menu-item"><a href="{% url 'index' %}">home</a></li>
+                      <li class="menu-item"><a href="{% url 'index' %}">series articles </a></li>
                       {% if categories %}
                       {% for category in categories %}
                       <li class="menu-item"><a href="{% url 'article_list' category.name %}">{{category.name}}</a></li>
