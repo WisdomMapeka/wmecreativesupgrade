@@ -120,6 +120,7 @@ sudo systemctl status gunicorn
 
 -logs
 sudo journalctl -u gunicorn
+sudo journalctl -u gunicorn.socket
 
 
 -config file 

@@ -73,21 +73,29 @@
   <body>
     <!-- Here is our main header that is used across all the pages of our website -->
 
-    <header class="main-nav-container">
-        <nav class="main-nav">
-            <ul class="logo">
-              <li><a href="{% url 'index' %}">WME<span style="color: #1f639b;">C</span>REATIVES</a></li>
-            </ul>
-
-            <ul>
-              <li><a href="{% url 'index' %}">Home</a></li>
-              {% if categories %}
-              {% for category in categories %}
-              <li><a href="{% url 'article_list' category.name %}">{{category.name}}</a></li>
-              {% endfor %}
-              {% endif %}
-            </ul>
-        </nav>
+    <header>
+      <nav class="navbar-main">
+          <!-- nav-tems-container--------------------starts-->
+          <div class="nav-items-container">
+              <div class="logo">
+                <a href="{% url 'index' %}">WME<span style="color: #1f639b;">C</span>REATIVES</a>
+              </div>
+              <div class="top-nav-menu" id="top-nav-menu-id">
+                  <ul class="menu-items-container">
+                      <li class="menu-item"><a href="{% url 'index' %}">Home</a></li>
+                      {% if categories %}
+                      {% for category in categories %}
+                      <li class="menu-item"><a href="{% url 'article_list' category.name %}">{{category.name}}</a></li>
+                      {% endfor %}
+                      {% endif %}
+                      <li class="menu-item"> <a href="http://">about</a> </li>
+                      <li class="menu-item"><a href="http://">contacts</a></li>
+                  </ul>
+              </div>
+              <button class="menu-toogle-button" id="menu-toogle-button-id"><img src="{% static 'blog/images/icons8-menu.svg' %}" alt="My image"></button>
+          </div>
+          <!-- nav-items-container-----------------end -->   
+      </nav>
     </header>
 
     <section class="social-medial-icons" style="border: none;">
