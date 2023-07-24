@@ -4,6 +4,7 @@ from . models import Categories, Articles, Images, AnalyticsCode, Photos_collect
 # Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    list_display  = ["title", "num_views"]
 
 admin.site.register(Articles, ArticleAdmin)
 
