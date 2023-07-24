@@ -1,0 +1,45 @@
+{% if categories_series %}
+{% for category in categories_series %}
+<!-- It contains an article -->
+<article>
+
+    <div class="category-titles-main-container theme-color-border">
+        <div class="category-titles-image-title-summary">
+            <div class="category-titles-page-article-img">
+                <a href="{% url 'article_list' category.name %}">
+                {% if category.lead_img %}
+                    <img alt="{{category.lead_img_alt}}"  src="{{category.lead_img.url}}">
+                {% else %}
+                {% endif %}
+                </a>
+            </div>
+
+            <div class="category-titles-content-section">
+                <div class="title-color">
+                    <a href="{% url 'article_list' category.name %}">
+                        {{category.name|safe}}
+                    </a>
+                </div>
+                <div>
+                    <a href="{% url 'article_list' category.name %}">
+                    {{category.summary|safe}}
+                    </a>
+                </div>
+            </div>
+        </div>
+            
+        <div class="category-titles-date-author-update-bloglist">
+            <span><a href=""><i class="fas fa-user"></i>&nbsp;&nbsp;by {{Category.author}}</a></span>
+            <span><a href=""><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;{{category.date_created}}</a></span>
+            {% if category.date_updated %}
+            <span><a href=""><i class="fas fa-pen-alt"></i>&nbsp;&nbsp;updated: {{category.date_updated}}</a></span>
+            {% else %}
+            {% endif %}
+            <!-- THIS FOLLOWING COMMENTED CODE IS NOT TO BE DELETED  -->
+            <!-- <span><a href=""><i class="fas fa-comment-alt"></i>&nbsp;&nbsp;88</a></span>
+            <span><a href=""><i class="far fa-eye"></i>&nbsp;&nbsp;100 views</a></span> -->
+        </div>
+    </div>
+</article>
+{% endfor %}
+{% endif %}

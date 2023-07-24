@@ -14,7 +14,7 @@ from rest_framework.parsers import JSONParser
 
 # Create your views here.
 def index(request):
-    all_posts = Articles.objects.filter(article_status='publish')
+    all_posts = Articles.objects.filter(article_status='publish').order_by("-id")
     categories = Categories.objects.filter(is_series=False)
     return render(request, 'blog/index.html', {"posts":all_posts,
                                                "categories":categories})
@@ -22,6 +22,14 @@ def index(request):
 def article(request, slug):
     categories = Categories.objects.filter(is_series=False)
     post = Articles.objects.get(slug = slug, article_status='publish')
+
+    if post.num_views == None:
+        post.num_views =1
+        post.save()
+    else:
+        post.num_views +=1
+        post.save()
+
     return render(request, 'blog/article.html', {"post":post,
                                                  "categories":categories})
 
@@ -33,10 +41,25 @@ def article_list(request, category):
     except AttributeError:
         category_id = 0
     print(category_id)
-    posts = Articles.objects.filter(category = category_id, article_status='publish')
+    posts = Articles.objects.filter(category = category_id, article_status='publish').order_by("-id")
     print(posts)
     return render(request, 'blog/article-list.html', {"posts":posts, 
                                                       "category":category,
+                                                      "categories":categories})
+
+"""
+THis view list all cateries with the the booled is_series set to True.
+If a person click on each category they are taken to the usuall list of articles page based 
+on category, with a series of article belonging to that category.
+
+THe only difference is that, the category name is treated a a title of some series this time
+"""
+def series_articles_title_list(request):
+    categories = Categories.objects.filter(is_series=False)
+    categories_series = Categories.objects.filter(is_series=True)
+
+    return render(request, 'blog/series-article-titles-list.html', { 
+                                                      "categories_series":categories_series,
                                                       "categories":categories})
 
 
