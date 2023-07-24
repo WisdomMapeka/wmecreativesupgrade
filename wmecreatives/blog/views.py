@@ -14,6 +14,7 @@ from rest_framework.parsers import JSONParser
 
 # Create your views here.
 def index(request):
+    print(request.user.is_authenticated)
     all_posts = Articles.objects.filter(article_status='publish').order_by("-id")
     categories = Categories.objects.filter(is_series=False)
     return render(request, 'blog/index.html', {"posts":all_posts,
@@ -23,12 +24,15 @@ def article(request, slug):
     categories = Categories.objects.filter(is_series=False)
     post = Articles.objects.get(slug = slug, article_status='publish')
 
-    if post.num_views == None:
-        post.num_views =1
-        post.save()
+    if request.user.is_authenticated == False:
+        if post.num_views == None:
+            post.num_views =1
+            post.save()
+        else:
+            post.num_views +=1
+            post.save()
     else:
-        post.num_views +=1
-        post.save()
+        pass
 
     return render(request, 'blog/article.html', {"post":post,
                                                  "categories":categories})
