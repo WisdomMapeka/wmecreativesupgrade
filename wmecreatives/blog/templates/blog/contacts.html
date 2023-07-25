@@ -1,0 +1,19 @@
+{% load static %}
+{% include 'blog/template-parts/header.html' %}
+<div class="contacts-page-theme">
+	Thank you for visiting wmeCreactives <i class="fas fa-handshake"></i>
+</div>
+<div class="contacts-page-container">
+	<span><b>Email</b></span><br>
+	<span>wisdommapeka@gmail.com</span><br><br>
+	<span><b>Call</b></span><br>
+	<span >+263779818939</span><br>
+
+	<!-- <span>or Click the button below and send me a message directly</span> -->
+	<a href="{% url 'sendmessage' %}">
+		<span class="contacts-page-sendmessage-button">send message</span>
+	</a>
+</div>
+
+
+{% include 'blog/template-parts/footer.html' %}	

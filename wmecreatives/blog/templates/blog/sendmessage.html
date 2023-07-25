@@ -1,0 +1,33 @@
+{% load static %}
+{% include 'blog/template-parts/header.html' %}
+<div class="contacts-page-theme">
+	Thank you for visiting wmeCreactives <i class="fas fa-handshake"></i>
+</div>
+
+<div class="sendmessage-page-container">
+	<form action="{% url 'sendmessage' %}" method="POST">
+		{% csrf_token %}
+		<label for="name">Name</label><br>
+		<input id="name" type="text" name="name" required><br>
+
+		<label for="email">Email</label><br>
+		<input id="email" type="email" name="email"><br>
+
+		<label for="phone">Phone</label><br>
+		<input id="phone" type="text" name="phone"><br>
+
+		<label for="message">Message</label><br>
+		<textarea id="message" name="message"></textarea><br>
+
+		<button type="submit">send message</button>
+	</form>
+</div>
+
+
+{% include 'blog/template-parts/footer.html' %}	
+
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>

@@ -26,7 +26,8 @@ pip freeze --local  > requirements.txt
 
 
 
-
+Kill port 8000 useful when the port is in use, 
+sudo lsof -t -i tcp:8000 | xargs kill -9
 
 --------------------------------------------------------
 DATABASES

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Categories, Articles, Images, AnalyticsCode, Photos_collections
+from . models import Categories, Articles, Images, AnalyticsCode, Photos_collections, Messages
 
 # Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
@@ -13,4 +13,4 @@ admin.site.register(Categories)
 # admin.site.register(Articles)
 admin.site.register(Images)
 admin.site.register(AnalyticsCode)
-admin.site.register(Photos_collections)
+admin.site.register(Messages)
