@@ -11,6 +11,7 @@ urlpatterns = [
     path('like_dislike_comment/<str:val>/<int:comment_id>/', views.like_dislike_comment, name='like_dislike_comment'),
     # contacts
     path('sendmessage/', views.sendmessage, name='sendmessage'),
+    path('sendmessage_success/', views.sendmessage_success, name="sendmessage-success"),
     path('contacts/', views.contacts, name='contacts'),
     # photo api
     path('photos_api/',  views.images_list),

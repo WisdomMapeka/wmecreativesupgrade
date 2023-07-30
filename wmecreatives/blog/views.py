@@ -105,6 +105,7 @@ def like_dislike_comment(request, val, comment_id):
     return JsonResponse(comment_like_dislike_details)
 
 
+from django.http import HttpResponseRedirect
 def sendmessage(request):
     if request.method == "POST":
         name = request.POST.get("name", None)
@@ -114,9 +115,12 @@ def sendmessage(request):
         
         user_message = Messages.objects.create(name=name, email=email, phone=phone, message=message)
         user_message.save()
+        return HttpResponseRedirect("/sendmessage_success/")
 
     return render(request, 'blog/sendmessage.html')
 
+def sendmessage_success(request):
+    return render(request, 'blog/success-message.html')
 
 def contacts(request):
     return render(request, 'blog/contacts.html')
