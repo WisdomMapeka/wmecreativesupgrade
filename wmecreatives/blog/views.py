@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from . models import Articles, Categories, AnalyticsCode, Comments, Messages, Photos_collections
 from django.shortcuts import render, get_object_or_404
 from django.core import serializers
@@ -10,6 +9,9 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -115,6 +117,14 @@ def sendmessage(request):
         
         user_message = Messages.objects.create(name=name, email=email, phone=phone, message=message)
         user_message.save()
+        # send mail--------------------------------------
+
+        # send_mail(
+        #     subject='Add an eye-catching subject',
+        #     message='Write an amazing message',
+        #     from_email=settings.EMAIL_HOST_USER,
+        #     recipient_list=['your_friend@their_email.com'])
+
         return HttpResponseRedirect("/sendmessage_success/")
 
     return render(request, 'blog/sendmessage.html')
