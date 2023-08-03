@@ -1,7 +1,6 @@
-from distutils.command.upload import upload
-from statistics import mode
 from django.db import models
 from tinymce.models import HTMLField 
+from django.contrib.sitemaps import ping_google
 
 draft_publish = (
     ('publish','publish'),
@@ -18,6 +17,7 @@ class AnalyticsCode(models.Model):
 
 class Categories(models.Model):
     name = models.CharField(null=True, blank=True, max_length=300, unique=True)
+    slug = models.CharField(max_length=1000, null=True, blank=True, unique=True)
     is_series = models.BooleanField(default=False)
     summary = models.TextField(null=True, blank=True, help_text="31 letters max will give a better out look")
     lead_img = models.ImageField(upload_to='media_files/blog', null=True, blank=True)
@@ -28,11 +28,23 @@ class Categories(models.Model):
     icon = models.ImageField(upload_to="media_files/Categories/icon", null=True, blank=True)
     icon_class = models.TextField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return "/article-list/%s/" % self.slug
+
     def __str__(self):
         if self.name:
             return self.name
         else:
             return "No Category"
+        
+    def save(self, force_insert=False, force_update=False):
+        super().save(force_insert, force_update)
+        try:
+            ping_google()
+        except Exception:
+            # Bare 'except' because we could get a variety
+            # of HTTP-related exceptions.
+            pass
 
 
 class Articles(models.Model):
@@ -55,9 +67,20 @@ class Articles(models.Model):
     # styleshit = models.CharField(max_length=100, null=True, blank=True, choices=choices, default="shades-of-purple.min.css")
     
 
-
+    def get_absolute_url(self):
+        return "/article/%s/" % self.slug
+    
     def __str__(self):
         return self.title
+    
+    def save(self, force_insert=False, force_update=False):
+        super().save(force_insert, force_update)
+        try:
+            ping_google()
+        except Exception:
+            # Bare 'except' because we could get a variety
+            # of HTTP-related exceptions.
+            pass
 
 class Images(models.Model):
     name = models.CharField(default='article image', null=True, blank=True, max_length=300, unique=True)

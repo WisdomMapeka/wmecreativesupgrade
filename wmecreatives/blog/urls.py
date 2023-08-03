@@ -1,6 +1,11 @@
 from django import views
 from django.urls import path, include
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemap import ArticleSitemap, CategoriesSitemap, StaticViewSitemap
+
+
+sitemaps = {'article' : ArticleSitemap, 'category' : CategoriesSitemap, "static": StaticViewSitemap}
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,4 +21,6 @@ urlpatterns = [
     # photo api
     path('photos_api/',  views.images_list),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # sitemap
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",)
 ]

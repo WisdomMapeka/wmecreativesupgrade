@@ -135,6 +135,9 @@ def sendmessage_success(request):
 def contacts(request):
     return render(request, 'blog/contacts.html')
 
+def about(request):
+    return render(request, 'blog/about.html')
+
 
 
 
