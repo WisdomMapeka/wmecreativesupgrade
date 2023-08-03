@@ -15,7 +15,8 @@ a{
 
 body{
   background-color: #f7f7f7;
-  color: #333333;
+  font-family: Montserrat,Roboto,sans-serif;
+  
 }
 
 /* 1.0 Header settings------------------------------- */
@@ -116,11 +117,26 @@ body{
  }
 
  @media only screen and (min-width: 808px) {
-    .main-content-container{flex-wrap: nowrap;}
-    .main-column-one{width: 73%;}
-    .main-column-two{width: 25%;}
+    .main-content-container{
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+    .main-column-one{
+      width: 60%;
+      margin-right: 30px;
+    }
+    .main-column-two{
+      width: 25%;
+      background-color: white;
+      margin-left: 30px;
+    }
   }
   /* 1.3 Article -styles for list of articles------------------ */
+  .home-recent-articles-title{
+    background-color:white;
+    margin-top: 0%;
+    padding: 20px;
+  }
   .post-main-container{
     background-color: white;
     border: solid 1px rgba(230,230,230, 0.7);
@@ -157,7 +173,7 @@ body{
 
 .bloglist-content-section div:nth-child(1){
   font-weight: bold;
-  font-size: 20px;
+  font-size: 23px;
   padding-top: 0px;
   padding-left: 8px;
   padding-right: 8px;
@@ -167,7 +183,7 @@ body{
 .bloglist-content-section div:nth-child(2){
   padding: 8px;
   font-size: 16px;
-  color: #6d6d6d;
+  /* color: #6d6d6d; */
 }
 .post-date-author-update-bloglist{
   padding-top: 10px;
@@ -243,7 +259,7 @@ body{
 .category-titles-content-section div:nth-child(2){
   padding: 8px;
   font-size: 16px;
-  color: #6d6d6d;
+  /* color: #6d6d6d; */
 }
 .category-titles-date-author-update-bloglist{
   padding-top: 10px;
