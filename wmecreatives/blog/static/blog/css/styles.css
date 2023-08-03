@@ -127,7 +127,7 @@ body{
     }
     .main-column-two{
       width: 25%;
-      background-color: white;
+      /* background-color: white; */
       margin-left: 30px;
     }
   }
