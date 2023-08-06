@@ -29,7 +29,7 @@ SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if config["PRODUCTION"] == "No":
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = False
 
