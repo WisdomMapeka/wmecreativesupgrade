@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Categories, Articles, Images, AnalyticsCode, Photos_collections, Messages
+from . models import Categories, Articles, Images, AnalyticsCode, Photos_collections, Messages, Comments
 
 # Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
@@ -12,6 +12,11 @@ class CategoriesAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display  = ["name", "is_series"] 
 admin.site.register(Categories, CategoriesAdmin)
+
+
+class CommentsAdmin(admin.ModelAdmin):
+    list_display  = ["name", "comment", "blog"] 
+admin.site.register(Comments, CommentsAdmin)
 
 # admin.site.register(Articles)
 admin.site.register(Images)
