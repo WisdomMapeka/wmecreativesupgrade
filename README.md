@@ -24,10 +24,14 @@ pip3 freeze > requirements.txt
 FOR LOCAL PACKAGES ONLY IN THE ENV
 pip freeze --local  > requirements.txt
 
-
+-------------------------------------------------------
+NETWORKING
 
 Kill port 8000 useful when the port is in use, 
 sudo lsof -t -i tcp:8000 | xargs kill -9
+
+check ip address of a computer
+ip a
 
 --------------------------------------------------------
 DATABASES
